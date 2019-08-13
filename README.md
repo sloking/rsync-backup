@@ -1,4 +1,15 @@
+# First Initial
+
+
+
+
 # rsync-backup
+
+
+
+
+
+
 
 Howto – local and remote snapshot backup using rsync with hard links
 Introduction

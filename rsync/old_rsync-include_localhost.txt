@@ -1,0 +1,172 @@
+#created by francois scheurer on 20120828
+#
+#note:
+#  -be careful with trailing spaces, '- * ' is different from '- *'
+#  -rsync stops at first matched rule and ignore the rest
+#  -rsync descends iteratively the folders-arborescence
+#  -'**' matches also zero, one or several '/'
+#  -get the list of all root files/folders
+#     pdsh -f 1 -w server[1-22] 'ls -la / | sed -e "s/  */ /g" | cut -d" " -f9-' | cut -d" " -f2- | sort -u
+#  -include all folders with '+ */' (missing this rule implies that '- *' will override all the inclusions of any subfolders)
+#  -exclude all non explicited files with '- *'
+#  -exclude everything except /etc/ssh: '+ /etc/ssh/** \ + */ \ - *'
+#  -exclude content of /tmp but include foldername: '- /tmp/* \ + */'
+#  -exclude content and also foldername /tmp: '- /tmp/ \ + */'
+#  -exclude content of each .ssh but include foldername: '- /**/.ssh/* \ + */'
+#
+#include everything except /tmp/:
+#- /tmp/
+#same but include /tmp/ as an empty folder:
+#- /tmp/*
+#include only /var/www/:
+#+ /var/
+#+ /var/www/
+#+ /var/www/**
+#- *
+#same but also include folder structure:
+#+ /var/www/**
+#+ */
+#- *
+
+
+
+
+#pattern list for / (include by default):
++ /
+
+#+ /boot/
+#+ /boot/**
+#- *
+
+- /lost+found/*
+- /*.bak*
+- /*.old*
+#- /backup/*
+#- /boot/*
+#- /etc/ssh/ssh_host*
+#- /home/*
+- /media/*
+#- /mnt/*/*
+#- /opt/*
+#- /opt/fedora*/data/*
+#- /opt/fedora*/lucene/*
+- /opt/fedora*/tomcat*/logs/*
+- /opt/fedora*/tomcat*/temp/*
+- /opt/fedora*/tomcat*/work/*
+- /opt/old/*
+- /proc/*
+- /root/old/*
+#- /root/.bash_history
+- /root/.mc/*
+#- /root/.ssh/*openssh*
+- /root/.viminfo
+- /root/tmp/*
+#- /srv/*
+- /sys/*
+- /tmp/*
+#- /usr/local/franz/logstat/logstat.log
+- /var/cache/*
+- /var/lib/mysql/*/*
+- /var/lib/postgresql/*/main/wal_archive/*
+- /var/lib/postgresql/*/main/pg_log/*
+#- /var/lib/postgresql/*/main/pg_xlog/*
+- /var/lib/postgresql/*/main/postmaster.opts
+- /var/lib/postgresql/*/main/postmaster.pid
+- /var/lib/postgresql/*/main/backup_in_progress
+- /var/lib/postgresql/*/main/backup_label
+#- /var/lib/postgresql/*/main/*/*
+- /var/log/*
+#- /var/spool/*
+- /var/tmp/*
+
+#pattern list for /backup/ and /mnt/ (exclude by default):
++ /backup/
+- /backup/lost+found/*
+- /backup/*.bak*
+- /backup/*.old*
++ /backup/snapshot/
++ /backup/snapshot/rsync/
++ /backup/snapshot/rsync/**
+- /backup/snapshot/DATA/*
+- /backup/snapshot/*
++ /backup/db/
+- /backup/db/*
+- /backup/*
+- /mnt/*.bak*
+- /mnt/*.old*
+- /mnt/old/
+- /mnt/*/*.bak*
+- /mnt/*/*.old*
+- /mnt/*/old/
++ /mnt/sas/*
++ /mnt/ssd/*
+- /mnt/*/tmp/*
+#- /mnt/*/opt/*
+#- /mnt/*/opt/fedora*/data/*
+#- /mnt/*/opt/fedora*/lucene/*
+- /mnt/*/opt/fedora*/tomcat*/logs/*
+- /mnt/*/opt/fedora*/tomcat*/temp/*
+- /mnt/*/opt/fedora*/tomcat*/work/*
+- /mnt/*/opt/old/*
+- /mnt/*/postgresql/*/main/wal_archive/*
+- /mnt/*/postgresql/*/main/pg_log/*
+#- /mnt/*/postgresql/*/main/pg_xlog/*
+- /mnt/*/postgresql/*/main/postmaster.opts
+- /mnt/*/postgresql/*/main/postmaster.pid
+- /mnt/*/postgresql/*/main/backup_in_progress
+- /mnt/*/postgresql/*/main/backup_label
+#- /mnt/*/postgresql/*/main/*/*
++ /mnt/*/backup/
++ /mnt/*/backup/snapshot/
++ /mnt/*/backup/snapshot/rsync/
++ /mnt/*/backup/snapshot/rsync/**
+- /mnt/*/backup/snapshot/*
++ /mnt/*/backup/db/
+- /mnt/*/backup/db/*
+- /mnt/*/backup/*
+- /mnt/*/*
++ /c/
++ /c/backup/
++ /c/backup/snapshot/
++ /c/backup/snapshot/rsync/
++ /c/backup/snapshot/rsync/**
+- /c/backup/snapshot/*
++ /c/backup/db/
+- /c/backup/*
+- /c/*/*
++ /home/
++ /home/backup/
++ /home/backup/snapshot/
++ /home/backup/snapshot/rsync/
++ /home/backup/snapshot/rsync/**
+- /home/backup/snapshot/*
++ /home/backup/db/
+- /home/backup/*
+- /USB/*
+
+#pattern list for /boot/ (include by default):
++ /boot/
+- /boot/lost+found/*
+- /boot/*.bak*
+- /boot/*.old*
++ /boot/**
+
+#pattern list for /home/ (include by default):
++ /home/
+- /home/lost+found/*
+- /home/*.bak*
+- /home/*.old*
+- /home/DATA/*
+- /home/xen/*
++ /home/**
+
+#include folder structure by default:
+#+ */
+#include everything by default:
++ *
+#exclude everything by default:
+#- *
+
+#eof
+
+

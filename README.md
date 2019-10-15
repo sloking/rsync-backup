@@ -18,17 +18,18 @@ Your Linux servers are running smoothly? Fine.
 Now if something incidentally gets wrong you need also to prepare an emergency plan.
 And even when everything is going fine, a backup that is directly stored on the same server can still be useful:
 
-    for example when you need to see what was changed on a specific file,
-    or if you want to find the list of files that were installed or modified after the installation of an application
+for example when you need to see what was changed on a specific file,
+or if you want to find the list of files that were installed or modified after the installation of an application
+
 
 This article is then intended to show you how you can set up an open-source solution, using the magic of the famous ‘rsync’ tool and some shell-scripting, to deploy a backup system without the need of investing into expensive proprietary software.
 Another advantage of a shell-script is that you can easily adapt it according to your specific needs, for example for you DRP architecture.
 
-The proposed shell-script is derivate from the great work of Mikes Handy’s rotating-filesystem-snapshot utility (cf. http://www.mikerubel.org/computers/rsync_snapshots).
+The proposed shell-script is derivate from the great work of Mikes Handy’s rotating-filesystem-snapshot utility (cf. http://www.mikerubel.org/s/rsync_snapshots).
 It creates backups of your full filesystem (snapshots) with the combined advantages of full and incremental backups:
 
-    It uses as little disk space as an incremental backup because all unchanged files are hard linked with existing files from previous backups; only the modified files require new inodes.
-    Because of the transparency of hard links, all backups are directly available and always online for read access with your usual programs; there is no need to extract the files from a full archive and also no complicate replay of incremental archives is necessary.
+It uses as little disk space as an incremental backup because all unchanged files are hard linked with existing files from previous backups; only the modified files require new inodes.
+Because of the transparency of hard links, all backups are directly available and always online for read access with your usual programs; there is no need to extract the files from a full archive and also no complicate replay of incremental archives is necessary.
 
 It is capable of doing local (self) backups and it can also be run from a remote backup server to centralize all backups to a safe place and therefore avoid correlated physical risks.
 ‘rsync’ features tremendous optimizations of bandwidth usage and transfers only the portions of a file that were changed thanks to its brilliant algorithms, created by Andrew Tridgell. (cf. http://bryanpendleton.blogspot.ch/2010/05/rsync-algorithm.html)
@@ -36,14 +37,14 @@ It is capable of doing local (self) backups and it can also be run from a remote
 
 The script let you achieve:
 
-    local or remote backups with extremely low bandwidth requirement
-    file level deduplication between backups using hard links (also across servers on the remote backup server)
-    specify a bandwidth limit to moderate the network and I/O load on production servers
-    backup retention policy:
-        per server disk quota restrictions: for example never exceed 50GB and always keep 100GB of free disk
-        rotation of backups with non-linear distribution, with the idea that recent backups are more useful than older, but that sometimes you still need a very old backup
-    filter rules to include or exclude specific patterns of folders and files
-    integrity protection, the backups have a ‘chattr’ read-only protection and a MD5 integrity signature can also be calculated incrementally
+- local or remote backups with extremely low bandwidth requirement
+- file level deduplication between backups using hard links (also across servers on the remote backup server)
+- specify a bandwidth limit to moderate the network and I/O load on production servers
+- backup retention policy:
++per server disk quota restrictions: for example never exceed 50GB and always keep 100GB of free disk
++rotation of backups with non-linear distribution, with the idea that recent backups are more useful than older, but that sometimes you still need a very old backup
++filter rules to include or exclude specific patterns of folders and files
++integrity protection, the backups have a ‘chattr’ read-only protection and a MD5 integrity signature can also be calculated incrementally
 
  
 

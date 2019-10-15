@@ -41,10 +41,10 @@ The script let you achieve:
 - file level deduplication between backups using hard links (also across servers on the remote backup server)
 - specify a bandwidth limit to moderate the network and I/O load on production servers
 - backup retention policy:
-+per server disk quota restrictions: for example never exceed 50GB and always keep 100GB of free disk
-+rotation of backups with non-linear distribution, with the idea that recent backups are more useful than older, but that sometimes you still need a very old backup
-+filter rules to include or exclude specific patterns of folders and files
-+integrity protection, the backups have a ‘chattr’ read-only protection and a MD5 integrity signature can also be calculated incrementally
+--per server disk quota restrictions: for example never exceed 50GB and always keep 100GB of free disk
+--rotation of backups with non-linear distribution, with the idea that recent backups are more useful than older, but that sometimes you still need a very old backup
+--filter rules to include or exclude specific patterns of folders and files
+--integrity protection, the backups have a ‘chattr’ read-only protection and a MD5 integrity signature can also be calculated incrementally
 
  
 

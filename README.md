@@ -48,7 +48,7 @@ The script let you achieve:
 
  
 
-####Installation
+#### Installation
 
 The snapshot backups are saved into the ‘/backup’ folder.
 You can also create a symbolic link to point to another partition with more disk space, for example:

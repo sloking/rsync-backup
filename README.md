@@ -68,9 +68,9 @@ And finally create the optional shell-script ‘/backup/snapshot/rsync/rsync-lis
 
 Set the ownerships and permissions:
 
-"chown -cR root:root /backup/snapshot/rsync/"
-"chmod 700 /backup/snapshot/rsync/rsync-\*.sh"
-"chmod 600 /backup/snapshot/rsync/rsync-include.txt"
+	chown -cR root:root /backup/snapshot/rsync/
+	chmod 700 /backup/snapshot/rsync/rsync-\*.sh
+	chmod 600 /backup/snapshot/rsync/rsync-include.txt
 
 
 Usage

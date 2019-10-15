@@ -53,12 +53,12 @@ The script let you achieve:
 The snapshot backups are saved into the ‘/backup’ folder.
 You can also create a symbolic link to point to another partition with more disk space, for example:
 
-ln -sv mnt/bigdisk /backup
+	ln -sv mnt/bigdisk /backup
 
 Then create the folders:
 
-mkdir -pv /backup/snapshot/{$(hostname -s),rsync,md5-log}
-[ -h /backup/snapshot/localhost ] || ln -vs $(hostname -s) /backup/snapshot/localhost
+	mkdir -pv /backup/snapshot/{$(hostname -s),rsync,md5-log}
+	[ -h /backup/snapshot/localhost ] || ln -vs $(hostname -s) /backup/snapshot/localhost
 
 Now create the shell-script ‘/backup/snapshot/rsync/rsync-snapshot.sh’ (download rsync-snapshot.sh):
 
